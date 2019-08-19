@@ -1,4 +1,5 @@
-# tls13-sm-spec
+# SM Cipher Suites for TLSv1.3
+
 The repository hosts the IETF Internet-Draft (I-D) of Chinese cipher suites in TLSv1.3 and related documentation.
 
 The I-D specifies a method of applying SM cipher suites within Transport Layer Security protocol version 1.3.
