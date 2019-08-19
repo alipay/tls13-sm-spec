@@ -5,22 +5,28 @@ The I-D specifies a method of applying SM cipher suites within Transport Layer S
 
 It's appreciated to have more organizations as well as individuals to co-operate on this I-D.
 
-# The Draft
+## The Draft
 
-Data Tracker on IETF: [draft-yang-tls-tls13-sm-suite](https://datatracker.ietf.org/doc/draft-yang-tls-tls13-sm-suites/)
+Following what IETF requires, the draft's named as: [draft-yang-tls-tls13-sm-suites](https://tools.ietf.org/html/draft-yang-tls-tls13-sm-suites-00)
 
 Reference to different formats of the compiled draft:
 
 * [TXT](https://tools.ietf.org/id/draft-yang-tls-tls13-sm-suites-00.txt)
 * [HTML](https://tools.ietf.org/html/draft-yang-tls-tls13-sm-suites-00)
 
-## Draft Source
+Data Tracker on IETF: [https://datatracker.ietf.org/doc/draft-yang-tls-tls13-sm-suites/](https://datatracker.ietf.org/doc/draft-yang-tls-tls13-sm-suites/)
+
+## Participation
+
+Both the official IETF [TLS WG mailing list](https://www.ietf.org/mailman/listinfo/tls) and the [Issues](https://github.com/alipay/tls13-sm-spec/issues) section of this repository would be nice places for any comments or discussions.
+
+## Build the Draft
 
 To be determined...(Will publish soon)
 
-# Chinese Algorithm Standards
+## Chinese Algorithm Standards
 
-This is a little complicated so I decide to explain a bit first.
+In this draft, some Chinese SM algorithm specifications are referenced. Not all of them are freely available online, so we offer some free English version here.
 
 There are several standard organizations have already published or are publishing SM related specifications:
 
