@@ -23,7 +23,7 @@ Both the official IETF [TLS WG mailing list](https://www.ietf.org/mailman/listin
 
 ## Build the Draft
 
-To be determined...(Will publish soon)
+Read the [BUILD.md](./BUILD.md) file for information on directory layout and building method.
 
 ## Chinese Algorithm Standards
 
