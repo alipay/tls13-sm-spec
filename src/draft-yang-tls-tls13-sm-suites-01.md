@@ -1,7 +1,7 @@
 ---
 title: SM Cipher Suites for Transport Layer Security (TLS) Protocol Version 1.3
 abbrev: TLSv1.3 SM Cipher Suites
-docname: draft-yang-tls-tls13-sm-suites-00
+docname: draft-yang-tls-tls13-sm-suites-01
 date: 2019-08-15
 # date: 2019-08
 # date: 2019
@@ -89,11 +89,37 @@ normative:
     date: 2004-05
 
 informative:
+  GBT.32907-2016:
+    title: Information security technology — SM4 block cipher algorithm
+    target: https://github.com/alipay/tls13-sm-spec/raw/master/sm-en-pdfs/sm4/GBT.32907-2016.SM4-en.pdf
+    author:
+      org: Standardization Administration of China
+    date: 2017-03-01
+    seriesinfo:
+      GB/T: 32907-2016
+  GBT.32905-2016:
+    title: Information security technology — SM3 cryptographic hash algorithm
+    target: https://github.com/alipay/tls13-sm-spec/raw/master/sm-en-pdfs/sm3/GBT.32905-2016.SM3-en.pdf
+    author:
+      org: Standardization Administration of China
+    date: 2017-03-01
+    seriesinfo:
+      GB/T: 32905-2016
+  GBT.32918.2-2016:
+    title: >
+      Information security technology — Public key cryptographic algorithm SM2
+      based on elliptic curves — Part 2: Digital signature algorithm
+    target: https://github.com/alipay/tls13-sm-spec/raw/master/sm-en-pdfs/sm2/GBT.32918.2-2016.SM2-en.pdf
+    author:
+      org: Standardization Administration of China
+    date: 2017-03-01
+    seriesinfo:
+      GB/T: 32918.2-2016
   GBT.32918.5-2016:
     title: >
       Information security technology — Public key cryptographic algorithm SM2
       based on elliptic curves — Part 5: Parameter definition
-    target: http://www.gb688.cn/bzgk/gb/newGbInfo?hcno=728DEA8B8BB32ACFB6EF4BF449BC3077
+    target: https://github.com/alipay/tls13-sm-spec/raw/master/sm-en-pdfs/sm2/GBT.32918.5-2016.SM2-en.pdf
     author:
       org: Standardization Administration of China
     date: 2017-03-01
@@ -169,10 +195,11 @@ encryption and SM3 as the hash function.
 SM2 is a set of elliptic curve based cryptographic algorithms including digital
 signature, public key encryption and key exchange scheme. In this draft, only
 the SM2 digital signature algorithm is involved, which has now already been added
-to ISO/IEC 14888-3:2018 {{ISO-SM2}}. SM4 is a block cipher and now is being
-standardized by ISO to ISO/IEC 18033-3:2010 {{ISO-SM4}}. SM3 is a hash function
-which produces an output of 256 bits. SM3 has already been accepted by ISO in
-ISO/IEC 10118-3:2018 {{ISO-SM3}}.
+to ISO/IEC 14888-3:2018 {{ISO-SM2}} (as well as in {{GBT.32918.2-2016}}).
+SM4 is a block cipher defined in {{GBT.32907-2016}} and now is being standardized
+by ISO to ISO/IEC 18033-3:2010 {{ISO-SM4}}. SM3 is a hash function which produces
+an output of 256 bits. SM3 has already been accepted by ISO in
+ISO/IEC 10118-3:2018 {{ISO-SM3}}, and also been described by {{GBT.32905-2016}}.
 
 
 Terminology     {#term}
@@ -279,6 +306,13 @@ used as the SM2 identifier according to {{GMT.0009-2012}}:
    1234567812345678
 ~~~~~~~~
 
+In the octet presentation, it should be:
+
+~~~~~~~~
+   0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38,
+   0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
+~~~~~~~~
+
 In practice, the SM2 identifier used in a certificate signature depends on the
 CA who signs that certificate. CAs may choose other values rather than the one
 mentioned above. Implementations of this document SHOULD confirm this information
@@ -364,7 +398,7 @@ Cipher
 
 The new cipher suites introduced in this document add two new AEAD encryption
 algorithms, AEAD_SM4_GCM and AEAD_SM4_CCM, which stand for SM4 cipher in Galois/Counter
-mode and SM4 cipher in Counter with CBC-MAC mode, respectively.
+mode and SM4 cipher [GBT.32907-2016] in Counter with CBC-MAC mode, respectively.
 
 This section defines the AEAD_SM4_GCM and AEAD_SM4_CCM AEAD algorithms in a
 style of what {{RFC5116}} has used to define AEAD ciphers based on AES cipher.
