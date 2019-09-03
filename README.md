@@ -46,4 +46,6 @@ The following table can be used to sort out the relations between different spec
 
 *Note: as mentioned, GM/Ts' and GB/Ts' contents are identical to each other except minor naming difference*
 
+*When working for Sun Microsystem, Whitfield Diffie has also done a translation of SM4 specification time ago, we upload the version [here](https://github.com/alipay/tls13-sm-spec/raw/master/sm-en-pdfs/sm4/diffie-sm4.pdf) for your reference.*
+
 We almost have all necessary English specifications here in the table. The current missing one is GM/T 0009-2012 (a.k.a., GB/T 35276-2017), we are now figuring out this missing and will update the table above if there is any update.
