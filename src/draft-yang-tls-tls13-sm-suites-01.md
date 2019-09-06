@@ -91,7 +91,7 @@ normative:
 informative:
   GBT.32907-2016:
     title: Information security technology — SM4 block cipher algorithm
-    target: https://github.com/alipay/tls13-sm-spec/raw/master/sm-en-pdfs/sm4/GBT.32907-2016.SM4-en.pdf
+    target: http://www.gmbz.org.cn/upload/2018-04-04/1522788048733065051.pdf
     author:
       org: Standardization Administration of China
     date: 2017-03-01
@@ -99,7 +99,7 @@ informative:
       GB/T: 32907-2016
   GBT.32905-2016:
     title: Information security technology — SM3 cryptographic hash algorithm
-    target: https://github.com/alipay/tls13-sm-spec/raw/master/sm-en-pdfs/sm3/GBT.32905-2016.SM3-en.pdf
+    target: http://www.gmbz.org.cn/upload/2018-07-24/1532401392982079739.pdf
     author:
       org: Standardization Administration of China
     date: 2017-03-01
@@ -109,7 +109,7 @@ informative:
     title: >
       Information security technology — Public key cryptographic algorithm SM2
       based on elliptic curves — Part 2: Digital signature algorithm
-    target: https://github.com/alipay/tls13-sm-spec/raw/master/sm-en-pdfs/sm2/GBT.32918.2-2016.SM2-en.pdf
+    target: http://www.gmbz.org.cn/upload/2018-07-24/1532401673138056311.pdf
     author:
       org: Standardization Administration of China
     date: 2017-03-01
@@ -119,7 +119,7 @@ informative:
     title: >
       Information security technology — Public key cryptographic algorithm SM2
       based on elliptic curves — Part 5: Parameter definition
-    target: https://github.com/alipay/tls13-sm-spec/raw/master/sm-en-pdfs/sm2/GBT.32918.5-2016.SM2-en.pdf
+    target: http://www.gmbz.org.cn/upload/2018-07-24/1532401863206085511.pdf
     author:
       org: Standardization Administration of China
     date: 2017-03-01
