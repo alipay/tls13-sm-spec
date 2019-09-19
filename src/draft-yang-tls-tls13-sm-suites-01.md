@@ -169,8 +169,8 @@ This document describes two new cipher suites for the Transport Layer Security
 are listed as follows (or {{proposed}}):
 
 ~~~~~~~
-   CipherSuite TLS_SM4_GCM_SM3 = {TBD1, TBD1};
-   CipherSuite TLS_SM4_CCM_SM3 = {TBD2, TBD2};
+   CipherSuite TLS_SM4_GCM_SM3 = { 0x00, 0xC6 };
+   CipherSuite TLS_SM4_CCM_SM3 = { 0x00, 0xC7 };
 ~~~~~~~
 
 These new cipher suites contains several SM cryptographic algorithms that
@@ -218,8 +218,8 @@ Proposed Cipher Suites     {#proposed}
 The cipher suites defined here have the following identifiers:
 
 ~~~~~~~~
-   CipherSuite TLS_SM4_GCM_SM3 = { TBD1, TBD1 };
-   CipherSuite TLS_SM4_CCM_SM3 = { TBD2, TBD2 };
+   CipherSuite TLS_SM4_GCM_SM3 = { 0x00, 0xC6 };
+   CipherSuite TLS_SM4_CCM_SM3 = { 0x00, 0xC7 };
 ~~~~~~~~
 
 To accomplish a TLSv1.3 handshake, more objects have been introduced along with
@@ -229,14 +229,14 @@ The SM2 signature algorithm and SM3 hash function used in the Signature Algorith
 extension defined in appendix-B.3.1.3 of {{RFC8446}}:
 
 ~~~~~~~~
-   SignatureScheme sm2sig_sm3 = { TBD3 };
+   SignatureScheme sm2sig_sm3 = { 0x0708 };
 ~~~~~~~~
 
 The SM2 elliptic curve ID used in the Supported Groups extension defined in
 appendix-B.3.1.4 of {{RFC8446}}:
 
 ~~~~~~~~
-   NamedGroup curveSM2 = { TBD4 };
+   NamedGroup curveSM2 = { 41 };
 ~~~~~~~~
 
 
@@ -482,29 +482,29 @@ key exchange process.
 IANA Considerations
 ===================
 
-IANA is requested to assign the values for TBD1 and TBD2 with the names
+IANA has assigned the values {0x00, 0xC6} and {0x00, 0xC7} with the names
 TLS_SM4_GCM_SM3, TLS_SM4_CCM_SM3,
 to the "TLS Cipher Suite" registry with this document as reference,
 as shown below.
 
-| Value | Description | DTLS-OK | Recommended | Reference |
-|------:+-------------+---------+-------------+-----------|
-| TBD1  | TLS_SM4_GCM_SM3 | No |    No     | this RFC   |
-| TBD2  | TLS_SM4_CCM_SM3 | No |    No     | this RFC   |
+|   Value    | Description | DTLS-OK | Recommended | Reference |
+|-----------:+-----------------+-----+-------------+-----------|
+| 0x00,0xC6  | TLS_SM4_GCM_SM3 | No  |      No     | this RFC  |
+| 0x00,0xC7  | TLS_SM4_CCM_SM3 | No  |      No     | this RFC  |
 
-IANA is requested to assign the value for TBD3 with the name sm2sig, to the
+IANA has assigned the value 0x0708 with the name sm2sig_sm3, to the
 "TLS SignatureScheme" registry, as shown below.
 
-| Value | Description | DTLS-OK | Reference |
-|------:+-------------+---------+-----------|
-| TBD3  |  sm2sig_sm3 |    No   | this RFC  |
+|  Value | Description | DTLS-OK | Recommended | Reference |
+|-------:+-------------+---------+-------------+-----------|
+| 0x0708 | sm2sig_sm3  |    No   |     No      | this RFC  |
 
-IANA is requested to assign the value for TBD4 with the name curveSM2, to the
+IANA has assigned the value 41 with the name curveSM2, to the
 "TLS Supported Groups" registry, as shown below.
 
 | Value | Description | DTLS-OK | Recommended | Reference |
 |------:+-------------+---------+-------------+-----------|
-| TBD4  |  curveSM2   |   No    |     No      | this RFC  |
+|  41   |  curveSM2   |   No    |     No      | this RFC  |
 
 
 Security Considerations
