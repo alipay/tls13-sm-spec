@@ -401,7 +401,7 @@ algorithms, AEAD_SM4_GCM and AEAD_SM4_CCM, which stand for SM4 cipher in Galois/
 mode and SM4 cipher [GBT.32907-2016] in Counter with CBC-MAC mode, respectively.
 
 This section defines the AEAD_SM4_GCM and AEAD_SM4_CCM AEAD algorithms in a
-style of what {{RFC5116}} has used to define AEAD ciphers based on AES cipher.
+style of what {{RFC5116}} has used to define AEAD ciphers based on SM4 cipher.
 
 ### AEAD_SM4_GCM
 
@@ -411,7 +411,7 @@ associated data to that mode of operation. An authentication tag conformed to
 what Section 5.2 of TLSv1.3 {{RFC8446}} requires is used, which in details SHOULD
 be constructed by the TLS record header. The AEAD_SM4_GCM ciphertext is formed by
 appending the authentication tag provided as an output to the GCM encryption
-operation to the ciphertext that is output by that operation. AES-AEAD_SM4_GCM has 
+operation to the ciphertext that is output by that operation. AEAD_SM4_GCM has 
 four inputs: a SM4 key, an initialization vector (IV), a plaintext content, and optional 
 additional authenticated data (AAD). AEAD_SM4_GCM generates two outputs: a ciphertext 
 and message authentication code (also called an authentication tag). To have a common 
@@ -426,9 +426,8 @@ values.  Using the same nonce for two different messages encrypted with the same
 destroys the security properties.To generate the nonce, implementations of this document 
 MUST conform to what TLSv1.3 specifies (See {{RFC8446}}, Section 5.3).
 
-AAD is authenticated but not encrypted. Thus, the AAD is not included in the AES-CCM 
-output.  It can be used to authenticate plaintext packet headers.  In the CMS 
-authenticated-enveloped-data content type, authenticated attributes comprise the AAD.
+AAD is authenticated but not encrypted. Thus, the AAD is not included in the SM4-CCM 
+output.  It can be used to authenticate plaintext packet headers.  
 
 The input and output lengths are as follows:
 
