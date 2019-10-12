@@ -401,7 +401,7 @@ algorithms, AEAD_SM4_GCM and AEAD_SM4_CCM, which stand for SM4 cipher in Galois/
 mode and SM4 cipher [GBT.32907-2016] in Counter with CBC-MAC mode, respectively.
 
 This section defines the AEAD_SM4_GCM and AEAD_SM4_CCM AEAD algorithms in a
-style of what {{RFC5116}} has used to define AEAD ciphers based on SM4 cipher.
+style of what {{RFC5116}} has used to define AEAD ciphers based on AES cipher.
 
 ### AEAD_SM4_GCM
 
