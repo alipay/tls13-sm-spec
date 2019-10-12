@@ -434,15 +434,15 @@ The input and output lengths are as follows:
 ~~~~~~~~
    SM4 key length is 16 octets,
 
-   Plaintext max length is 2^36 - 31 octets,
+   Max plaintext length is 2^36 - 31 octets,
 
-   AAD max length is 2^61 - 1 octets,
+   Max AAD length is 2^61 - 1 octets,
 
    Nonce length is 12 octets, 
    
    Authentication tag length is 16 octets, and
 
-   Ciphertext max length is 2^36 - 15 octets.
+   Max Ciphertext length is 2^36 - 15 octets.
 ~~~~~~~~
 
 A security analysis of GCM is available in [MV04].
@@ -474,11 +474,11 @@ by that operation. The input and output lengths are as follows:
 ~~~~~~~~
    SM4 key length is is 16 octets,
 
-   Plaintext max length is 2^24 - 1 octets,
+   Max plaintext length is 2^24 - 1 octets,
 
-   AAD max length is 2^64 - 1 octets, and
+   Max AAD length is 2^64 - 1 octets, and
 
-   Ciphertext max length is 2^24 + 15 octets.
+   Max Ciphertext length is 2^24 + 15 octets.
 ~~~~~~~~
 
 To generate the nonce, implementations of this document MUST conform to what
