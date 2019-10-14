@@ -412,7 +412,7 @@ what Section 5.2 of TLSv1.3 {{RFC8446}} requires is used, which in details SHOUL
 be constructed by the TLS record header. The AEAD_SM4_GCM ciphertext is formed by
 appending the authentication tag provided as an output to the GCM encryption
 operation to the ciphertext that is output by that operation. AEAD_SM4_GCM has 
-four inputs: a SM4 key, an initialization vector (IV), a plaintext content, and optional 
+four inputs: an SM4 key, an initialization vector (IV), a plaintext content, and optional 
 additional authenticated data (AAD). AEAD_SM4_GCM generates two outputs: a ciphertext 
 and message authentication code (also called an authentication tag). To have a common 
 set of terms for AEAD_SM4_GCM and AEAD_SM4_CCM, the AEAD_SM4_GCM IV is referred to as a 
