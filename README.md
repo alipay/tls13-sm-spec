@@ -8,7 +8,7 @@ It's appreciated to have more organizations as well as individuals to co-operate
 
 ## The Draft
 
-Following what IETF requires, the draft's named as: [draft-yang-tls-tls13-sm-suites](https://tools.ietf.org/html/draft-yang-tls-tls13-sm-suites-00)
+Following what IETF requires, the draft's named as: [draft-yang-tls-tls13-sm-suites](https://tools.ietf.org/html/draft-yang-tls-tls13-sm-suites-01)
 
 Reference to different formats of the compiled draft:
 
