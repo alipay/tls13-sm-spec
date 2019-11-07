@@ -1,8 +1,8 @@
 ---
 title: SM Cipher Suites for Transport Layer Security (TLS) Protocol Version 1.3
 abbrev: TLSv1.3 SM Cipher Suites
-docname: draft-yang-tls-tls13-sm-suites-01
-date: 2019-09-19
+docname: draft-yang-tls-tls13-sm-suites-02
+date: 2019-12-31
 # date: 2019-08
 # date: 2019
 
