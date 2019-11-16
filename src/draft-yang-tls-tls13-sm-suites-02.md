@@ -2,7 +2,7 @@
 title: SM Cipher Suites for Transport Layer Security (TLS) Protocol Version 1.3
 abbrev: TLSv1.3 SM Cipher Suites
 docname: draft-yang-tls-tls13-sm-suites-02
-date: 2019-12-31
+date: 2019-11-16
 # date: 2019-08
 # date: 2019
 
@@ -165,13 +165,7 @@ Introduction        {#intro}
 ============
 
 This document describes two new cipher suites for the Transport Layer Security
-(TLS) protocol version 1.3 (a.k.a TLSv1.3, {{RFC8446}}). The new cipher suites
-are listed as follows (or {{proposed}}):
-
-~~~~~~~
-   CipherSuite TLS_SM4_GCM_SM3 = { 0x00, 0xC6 };
-   CipherSuite TLS_SM4_CCM_SM3 = { 0x00, 0xC7 };
-~~~~~~~
+(TLS) protocol version 1.3 (a.k.a TLSv1.3, {{RFC8446}}).
 
 These new cipher suites contains several SM cryptographic algorithms that
 provide both authentication and confidentiality. For the more detailed
@@ -246,9 +240,7 @@ Cipher Suites Definitions  {#definitions}
 TLS Versions
 ------------
 
-The only capable version for the new cipher suites defined in this document
-is TLSv1.3. Implementations of this document MUST NOT apply these cipher suites
-into any TLS protocols that have an older version than 1.3.
+These cipher suites SHALL NOT be used with any TLS version earlier than v1.3.
 
 Authentication
 --------------
