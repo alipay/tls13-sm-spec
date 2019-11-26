@@ -1,8 +1,8 @@
 ---
-title: SM Cipher Suites for Transport Layer Security (TLS) Protocol Version 1.3
+title: ShangMi (SM) Cipher Suites for Transport Layer Security (TLS) Protocol Version 1.3
 abbrev: TLSv1.3 SM Cipher Suites
 docname: draft-yang-tls-tls13-sm-suites-02
-date: 2019-11-16
+date: 2019-11-26
 # date: 2019-08
 # date: 2019
 
@@ -36,6 +36,7 @@ author:
 
 normative:
   RFC2119:
+  RFC8174:
   RFC8446:
   RFC5116:
   ISO-SM2:
@@ -155,39 +156,57 @@ informative:
 
 --- abstract
 
-This draft specifies a set of cipher suites for the Transport
-Layer Security (TLS) protocol version 1.3 to support SM cryptographic
+This document specifies a set of cipher suites for the Transport
+Layer Security (TLS) protocol version 1.3 to support ShangMi (SM) cryptographic
 algorithms.
+
+The use of these cipher suites with TLSv1.3 is not endorsed by the IETF.  The SM
+cipher suites are becoming mandatory in China, and so this document provides a
+description of how to use the SM cipher suites with TLSv1.3 so that implementers
+can produce interworking implementations.
+
 
 --- middle
 
 Introduction        {#intro}
 ============
 
-This document describes two new cipher suites for the Transport Layer Security
-(TLS) protocol version 1.3 (a.k.a TLSv1.3, {{RFC8446}}).
+This document describes two new cipher suites for the Transport Layer
+Security (TLS) protocol version 1.3 (TLSv1.3, [RFC8446]).  The new cipher suites
+are as follows (see also Section 2):
 
-These new cipher suites contains several SM cryptographic algorithms that
-provide both authentication and confidentiality. For the more detailed
+~~~~~~~~
+   CipherSuite TLS_SM4_GCM_SM3 = { 0x00, 0xC6 };
+   CipherSuite TLS_SM4_CCM_SM3 = { 0x00, 0xC7 };
+~~~~~~~~
+
+These new cipher suites contain several ShangMi (SM) cryptographic algorithms
+that provide both authentication and confidentiality. For a more detailed
 introduction to SM cryptographic algorithms, please read {{sm-algos}}.
 These cipher suites follow what TLSv1.3 requires. For instance, all the cipher
-suites mentioned in this draft use ECDHE as the key exchange scheme and use
-SM4 in either GCM mode or CCM mode to meet the need of TLSv1.3 to have an AEAD
-capable encryption algorithm.
+suites mentioned in this document use ECDHE (Elliptic Curve Diffie-Hellman Ephemeral)
+as the key exchange scheme and use SM4 in either GCM (Galois/Counter Mode) mode
+or CCM (Counter with CBC-MAC) mode to meet the needs of TLSv1.3 to have an AEAD
+(Authenticated Encryption with Associated Data) capable encryption algorithm.
 
 For the details about how these new cipher suites negotiate shared encryption
-key and protect the record structure, please read {{definitions}}.
+keys and protect the record structure, please read {{definitions}}.
+
+The cipher suites defined in this document are not recommended by the IETF. The SM
+cipher suites are becoming mandatory in China, and so this document provides a
+description of how to use the SM cipher suites with TLSv1.3 so that implementers
+can produce interworking implementations.
 
 
 The SM Algorithms    {#sm-algos}
 -------------------
 
-The new cipher suites defined in this draft use several different SM
+The new cipher suites defined in this document use several different SM
 cryptographic algorithms including SM2 for authentication, SM4 for
 encryption and SM3 as the hash function.
 
 SM2 is a set of elliptic curve based cryptographic algorithms including digital
-signature, public key encryption and key exchange scheme. In this draft, only
+signature, public key encryption and key exchange scheme. In this document, only
 the SM2 digital signature algorithm is involved, which has now already been added
 to ISO/IEC 14888-3:2018 {{ISO-SM2}} (as well as in {{GBT.32918.2-2016}}).
 SM4 is a block cipher defined in {{GBT.32907-2016}} and now is being standardized
@@ -200,13 +219,14 @@ Terminology     {#term}
 -----------
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-document are to be interpreted as described in RFC 2119, BCP 14
-{{RFC2119}} and indicate requirement levels for compliant TLSv1.3
-implementations.
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+"OPTIONAL" in this document are to be interpreted as described in BCP
+14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in all
+capitals, as shown here, and indicate requirement levels for
+compliant TLSv1.3 implementations.
 
 
-Proposed Cipher Suites     {#proposed}
+Supported Cipher Suites     {#proposed}
 =====================
 
 The cipher suites defined here have the following identifiers:
@@ -240,23 +260,25 @@ Cipher Suites Definitions  {#definitions}
 TLS Versions
 ------------
 
-These cipher suites SHALL NOT be used with any TLS version earlier than v1.3.
+The new cpher suites defined in this document are only applicable to TLSv1.3.
+Implementations of this document MUST NOT apply these cipher suites to any older
+versions of TLS.
 
 Authentication
 --------------
 
 ### SM2 Signature Scheme
 
-All cipher suites defined in this document use SM2 signature algorithm as the
+All cipher suites defined in this document use the SM2 signature algorithm as the
 authentication method when doing a TLSv1.3 handshake.
 
-SM2 signature is defined in {{ISO-SM2}}. In general, SM2 is a signature algorithm
+The SM2 signature is defined in {{ISO-SM2}}. SM2 signature algorithm is
 based on elliptic curves. SM2 signature algorithm uses a fixed elliptic curve
 parameter set defined in {{GBT.32918.5-2016}}. This curve has the name curveSM2
-and IANA is requested to assign a value for it. Unlike other elliptic curve
-based public key algorithm like ECDSA, SM2 cannot select other elliptic curves
-in practice, but it's allowed to write test cases by using other elliptic curve
-parameter sets for SM2, take Annex F.14 of {{ISO-SM2}} as a reference.
+and has been assigned the value 41 as shown in Section 4. Unlike other elliptic curve
+based public key algorithm like ECDSA, SM2 MUST NOT select other elliptic curves.
+But it is acceptable to write test cases that use other elliptic curve parameter
+sets for SM2, take Annex F.14 of {{ISO-SM2}} as a reference.
 
 Implementations of the cipher suites defined in this document SHOULD conform to
 what {{GBT.32918.5-2016}} requires, that is to say, the only valid elliptic curve
@@ -281,10 +303,10 @@ parameter for SM2 signature algorithm (a.k.a curveSM2) is defined as follows:
         D0A9877C C62A4740 02DF32E5 2139F0A0
 ~~~~~~~~
 
-SM2 signature algorithm requests an identifier value when generate the signature,
-as well as when verifying an SM2 signature. Implementations of this document
-MUST use the following ASCII string value as the SM2 identifier when doing a
-TLSv1.3 key exchange:
+The SM2 signature algorithm requests an identifier value when generating the
+signature, as well as when verifying an SM2 signature. Implementations of this
+document MUST use the following ASCII string value as the SM2 identifier when
+doing a TLSv1.3 key exchange:
 
 ~~~~~~~~
    TLSv1.3+GM+Cipher+Suite
@@ -321,7 +343,7 @@ MUST conform to the new requirements.
 
 #### ClientHello
 
-A TLSv1.3 client is REQUIRED to include the new cipher suites in its 'cipher_suites'
+A TLSv1.3 client MUST include the new cipher suites in its 'cipher_suites'
 array of the ClientHello structure defined in Section 4.1.2 of {{RFC8446}}.
 
 Other requirements on the extensions of ClientHello message are:
@@ -340,6 +362,15 @@ so, then the server MUST put one of the new cipher suites defined in this
 document into its ServerHello's 'cipher_suites' array and eventually sends it
 to the client side.
 
+A TLSv1.3 server's choice of what cipher suite to use depends on the configuration
+of the server. For instance, a TLSv1.3 server may be configured to include the
+new cipher suites defined in this document, or it may not be. Typical TLSv1.3
+server applications also provide a mechanism that configures the cipher suite
+preference at server side. If a server is not configured to use the cipher suites
+defined in this document, it SHOULD choose another cipher suite in the list that
+a TLSv1.3 client provides; otherwise the server MUST abort the handshake with
+a "illegal_parameter" alert.
+
 The following extensions MUST conform to the new requirements:
 
 * For key_share extension, a KeyShareEntry with SM2 related values MUST be added
@@ -348,7 +379,7 @@ if the server wants to start a TLSv1.3 key negotiation using SM cipher suites.
 ### CertificateRequest
 
 If a CertificateRequest message is sent by the server to require the client
-to send its certificate for authentication purpose, the following requirements
+to send its certificate for authentication purposes, the following requirements
 MUST be fulfilled:
 
 * The only valid signature algorithm present in 'signature_algorithms' extension
@@ -358,7 +389,7 @@ SM2 and SM3 capable ones.
 
 ### Certificate
 
-When server sends the Certificate message which contains the server certificate
+When a server sends the Certificate message which contains the server certificate
 to the client side, several new rules are added that will affect the certificate
 selection:
 
@@ -372,7 +403,7 @@ of X.509's Key Usage extension is set.
 
 In the certificateVerify message, the signature algorithm MUST be sm2sig_sm3,
 indicating the hash function MUST be SM3 and the signature algorithm MUST be
-SM2 signature algorithm.
+SM2.
 
 Key Scheduling
 -------------
@@ -381,7 +412,7 @@ As described in {{sm-algos}}, SM2 is actually a set of cryptographic
 algorithms including one key exchange protocol which defines methods such as
 key derivation function, etc. In this document, SM2 key exchange protocol is
 not introduced and SHALL NOT be used in the key exchange steps defined in
-{{kx}}. Implementations of this document SHOULD always conform to what TLSv1.3
+{{kx}}. Implementations of this document MUST always conform to what TLSv1.3
 {{RFC8446}} and its successors require about the key derivation and related
 methods.
 
@@ -398,9 +429,9 @@ style of what {{RFC5116}} has used to define AEAD ciphers based on AES cipher.
 ### AEAD_SM4_GCM
 
 The AEAD_SM4_GCM authenticated encryption algorithm works as specified in [GCM],
-using SM4 as the block cipher, by providing the key, nonce, and plaintext, and
-associated data to that mode of operation. An authentication tag conformed to
-what Section 5.2 of TLSv1.3 {{RFC8446}} requires is used, which in details SHOULD
+using SM4 as the block cipher, by providing the key, nonce, plaintext, and
+associated data to that mode of operation. An authentication tag conforming to
+what Section 5.2 of TLSv1.3 {{RFC8446}} requires is used, which in details MUST
 be constructed by the TLS record header. The AEAD_SM4_GCM ciphertext is formed by
 appending the authentication tag provided as an output to the GCM encryption
 operation to the ciphertext that is output by that operation. AEAD_SM4_GCM has 
@@ -457,8 +488,8 @@ identified in that appendix are as follows:
    the value of q is 3.
 ~~~~~~~~
 
-An authentication tag conformed to what Section 5.2 of TLSv1.3 {{RFC8446}}
-requires is used, which in details SHOULD be constructed by the TLS record header.
+An authentication tag conforming to what Section 5.2 of TLSv1.3 {{RFC8446}}
+requires is used, which in details MUST be constructed by the TLS record header.
 The AEAD_SM4_CCM ciphertext is formed by appending the authentication tag provided
 as an output to the CCM encryption operation to the ciphertext that is output
 by that operation. The input and output lengths are as follows:
@@ -503,9 +534,9 @@ as shown below.
 IANA has assigned the value 0x0708 with the name sm2sig_sm3, to the
 "TLS SignatureScheme" registry, as shown below.
 
-|  Value | Description | DTLS-OK | Recommended | Reference |
-|-------:+-------------+---------+-------------+-----------|
-| 0x0708 | sm2sig_sm3  |    No   |     No      | this RFC  |
+|  Value | Description | Recommended | Reference |
+|-------:+-------------+-------------+-----------|
+| 0x0708 | sm2sig_sm3  |     No      | this RFC  |
 
 IANA has assigned the value 41 with the name curveSM2, to the
 "TLS Supported Groups" registry, as shown below.
@@ -518,11 +549,11 @@ IANA has assigned the value 41 with the name curveSM2, to the
 Security Considerations
 =======================
 
-At the time of writing this draft, there are no known weak keys for SM
+At the time of writing this document, there are no known weak keys for SM
 cryptographic algorithms SM2, SM3 and SM4, and no security problem
 has been found on those algorithms.
 
-* The cipher suites described in this document *MUST NOT* be used with TLSv1.2
+* The cipher suites described in this document MUST NOT be used with TLSv1.2
   or earlier.
 
 --- back
@@ -530,7 +561,7 @@ has been found on those algorithms.
 Test Vectors
 ============
 
-All values are in hexadecimal and represented by the network order(called big endian)
+All values are in hexadecimal and are in network order (big endian).
 
 SM4-GCM Test Vectors
 --------------------
@@ -591,8 +622,3 @@ william.zk@antfin.com
 Han Xiao  
 Ant Financial  
 han.xiao@antfin.com  
-
-Acknowledgments
-===============
-
-To be determined.
