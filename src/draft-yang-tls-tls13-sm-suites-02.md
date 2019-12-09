@@ -173,7 +173,7 @@ Introduction        {#intro}
 
 This document describes two new cipher suites for the Transport Layer
 Security (TLS) protocol version 1.3 (TLSv1.3, [RFC8446]).  The new cipher suites
-are as follows (see also Section 2):
+are (see also Section 2):
 
 ~~~~~~~~
    CipherSuite TLS_SM4_GCM_SM3 = { 0x00, 0xC6 };
@@ -183,7 +183,7 @@ are as follows (see also Section 2):
 These new cipher suites contain several ShangMi (SM) cryptographic algorithms
 that provide both authentication and confidentiality. For a more detailed
 introduction to SM cryptographic algorithms, please read {{sm-algos}}.
-These cipher suites follow what TLSv1.3 requires. For instance, all the cipher
+These cipher suites follow the TLSv1.3 requirements. Specifically, all the cipher
 suites mentioned in this document use ECDHE (Elliptic Curve Diffie-Hellman Ephemeral)
 as the key exchange scheme and use SM4 in either GCM (Galois/Counter Mode) mode
 or CCM (Counter with CBC-MAC) mode to meet the needs of TLSv1.3 to have an AEAD
@@ -276,7 +276,7 @@ The SM2 signature is defined in {{ISO-SM2}}. SM2 signature algorithm is
 based on elliptic curves. SM2 signature algorithm uses a fixed elliptic curve
 parameter set defined in {{GBT.32918.5-2016}}. This curve has the name curveSM2
 and has been assigned the value 41 as shown in Section 4. Unlike other elliptic curve
-based public key algorithm like ECDSA, SM2 MUST NOT select other elliptic curves.
+based public key algorithms like ECDSA, SM2 MUST NOT select other elliptic curves.
 But it is acceptable to write test cases that use other elliptic curve parameter
 sets for SM2, take Annex F.14 of {{ISO-SM2}} as a reference.
 
@@ -303,24 +303,23 @@ parameter for SM2 signature algorithm (a.k.a curveSM2) is defined as follows:
         D0A9877C C62A4740 02DF32E5 2139F0A0
 ~~~~~~~~
 
-The SM2 signature algorithm requests an identifier value when generating the
-signature, as well as when verifying an SM2 signature. Implementations of this
-document MUST use the following ASCII string value as the SM2 identifier when
-doing a TLSv1.3 key exchange:
+The SM2 signature algorithm requests an identifier value when generating or verifying
+a signature. Implementations of this document MUST use the following ASCII string
+value as the SM2 identifier when doing a TLSv1.3 key exchange:
 
 ~~~~~~~~
    TLSv1.3+GM+Cipher+Suite
 ~~~~~~~~
 
 Except if either a client or a server needs to verify the peer's SM2 certificate
-contained in the Certificate message, the following ASCII string value SHOULD be
+contained in the Certificate message, then the following ASCII string value SHOULD be
 used as the SM2 identifier according to {{GMT.0009-2012}}:
 
 ~~~~~~~~
    1234567812345678
 ~~~~~~~~
 
-In the octet presentation, it should be:
+Expressed as octets, it is:
 
 ~~~~~~~~
    0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38,
@@ -328,9 +327,8 @@ In the octet presentation, it should be:
 ~~~~~~~~
 
 In practice, the SM2 identifier used in a certificate signature depends on the
-CA who signs that certificate. CAs may choose other values rather than the one
-mentioned above. Implementations of this document SHOULD confirm this information
-by themselves.
+CA who signs that certificate. CAs may choose other values than the ones mentioned
+above. Implementations of this document SHOULD confirm this information by themselves.
 
 Key Exchange  {#kx}
 ------------
@@ -348,10 +346,10 @@ array of the ClientHello structure defined in Section 4.1.2 of {{RFC8446}}.
 
 Other requirements on the extensions of ClientHello message are:
 
-* For supported_groups extension, 'curveSM2' MUST be included;
-* For signature_algorithms extension, 'sm2sig_sm3' MUST be included;
-* For signature_algorithms_cert extension (if presented), 'sm2sig_sm3' MUST be included;
-* For key_share extension, a KeyShareEntry with SM2 related values MUST be added
+* For the supported_groups extension, 'curveSM2' MUST be included;
+* For the signature_algorithms extension, 'sm2sig_sm3' MUST be included;
+* For the signature_algorithms_cert extension (if present), 'sm2sig_sm3' MUST be included;
+* For the key_share extension, a KeyShareEntry with SM2 related values MUST be added
 if the client wants to start a TLSv1.3 key negotiation using SM cipher suites.
 
 #### ServerHello
@@ -368,12 +366,12 @@ new cipher suites defined in this document, or it may not be. Typical TLSv1.3
 server applications also provide a mechanism that configures the cipher suite
 preference at server side. If a server is not configured to use the cipher suites
 defined in this document, it SHOULD choose another cipher suite in the list that
-a TLSv1.3 client provides; otherwise the server MUST abort the handshake with
-a "illegal_parameter" alert.
+the TLSv1.3 client provides; otherwise the server MUST abort the handshake with
+an "illegal_parameter" alert.
 
 The following extensions MUST conform to the new requirements:
 
-* For key_share extension, a KeyShareEntry with SM2 related values MUST be added
+* For the key_share extension, a KeyShareEntry with SM2 related values MUST be added
 if the server wants to start a TLSv1.3 key negotiation using SM cipher suites.
 
 ### CertificateRequest
@@ -383,9 +381,9 @@ to send its certificate for authentication purposes, the following requirements
 MUST be fulfilled:
 
 * The only valid signature algorithm present in 'signature_algorithms' extension
-MUST be 'sm2sig_sm3'. That is to say, if server finally chooses to use a SM
-cipher suite, the signature algorithm for client's certificate SHOULD only be
-SM2 and SM3 capable ones.
+MUST be 'sm2sig_sm3'. That is to say, if server chooses to use an SM cipher suite,
+the signature algorithm for client's certificate SHOULD only be SM2 and SM3 capable
+ones.
 
 ### Certificate
 
@@ -396,7 +394,7 @@ selection:
 * The public key in the certificate MUST be a valid SM2 public key.
 * The signature algorithm used by the CA to sign current certificate MUST be
 sm2sig_sm3.
-* The certificate MUST be capable for signing, e.g., the digitalSignature bit
+* The certificate MUST be capable of signing, e.g., the digitalSignature bit
 of X.509's Key Usage extension is set.
 
 ### CertificateVerify
@@ -423,8 +421,8 @@ The new cipher suites introduced in this document add two new AEAD encryption
 algorithms, AEAD_SM4_GCM and AEAD_SM4_CCM, which stand for SM4 cipher in Galois/Counter
 mode and SM4 cipher [GBT.32907-2016] in Counter with CBC-MAC mode, respectively.
 
-This section defines the AEAD_SM4_GCM and AEAD_SM4_CCM AEAD algorithms in a
-style of what {{RFC5116}} has used to define AEAD ciphers based on AES cipher.
+This section defines the AEAD_SM4_GCM and AEAD_SM4_CCM AEAD algorithms in the
+style of what {{RFC5116}} used to define AEAD ciphers based on AES cipher.
 
 ### AEAD_SM4_GCM
 
@@ -443,29 +441,26 @@ nonce in the remainder of this document. A simple test vector of AEAD_SM4_GCM an
 AEAD_SM4_CCM is given in Appendix A of this document.
 
 The nonce is generated by the party performing the authenticated encryption operation.  
-Within the scope of any authenticated-encryption key, the nonce value MUST be unique.  
-That is, the set of nonce values used with any given key MUST NOT contain any duplicate 
-values.  Using the same nonce for two different messages encrypted with the same key 
-destroys the security properties.To generate the nonce, implementations of this document 
-MUST conform to what TLSv1.3 specifies (See {{RFC8446}}, Section 5.3).
-
-AAD is authenticated but not encrypted. Thus, the AAD is not included in the SM4-CCM 
-output.  It can be used to authenticate plaintext packet headers.  
+Within the scope of any authenticated-encryption key, the nonce value MUST be unique.
+That is, the set of nonce values used with any given key MUST NOT contain any duplicates.
+Using the same nonce for two different messages encrypted with the same key
+destroys the security properties of GCM mode. To generate the nonce, implementations of this document
+MUST conform to TLSv1.3 (See {{RFC8446}}, Section 5.3).
 
 The input and output lengths are as follows:
 
 ~~~~~~~~
-   SM4 key length is 16 octets,
+   the SM4 key length is 16 octets,
 
-   Max plaintext length is 2^36 - 31 octets,
+   the max plaintext length is 2^36 - 31 octets,
 
-   Max AAD length is 2^61 - 1 octets,
+   the max AAD length is 2^61 - 1 octets,
 
-   Nonce length is 12 octets, 
-   
-   Authentication tag length is 16 octets, and
+   the nonce length is 12 octets,
 
-   Max Ciphertext length is 2^36 - 15 octets.
+   the authentication tag length is 16 octets, and
+
+   the max ciphertext length is 2^36 - 15 octets.
 ~~~~~~~~
 
 A security analysis of GCM is available in [MV04].
@@ -473,11 +468,11 @@ A security analysis of GCM is available in [MV04].
 ### AEAD_SM4_CCM
 
 The AEAD_SM4_CCM authenticated encryption algorithm works as specified in [CCM],
-using SM4 as the block cipher, AEAD_SM4_CCM has four inputs: an SM4 key, a nonce, 
-a plaintext, and optional additional authenticated data (AAD). AEAD_SM4_CCM 
-generates two outputs: a ciphertext and a message authentication code (also called 
-an authentication tag). The formatting and counter generation function are as 
-specified in Appendix A of that reference, and the values of the parameters 
+using SM4 as the block cipher. AEAD_SM4_CCM has four inputs: an SM4 key, a nonce,
+a plaintext, and optional additional authenticated data (AAD). AEAD_SM4_CCM
+generates two outputs: a ciphertext and a message authentication code (also called
+an authentication tag). The formatting and counter generation functions are as
+specified in Appendix A of [CCM], and the values of the parameters
 identified in that appendix are as follows:
 
 ~~~~~~~~
@@ -495,24 +490,24 @@ as an output to the CCM encryption operation to the ciphertext that is output
 by that operation. The input and output lengths are as follows:
 
 ~~~~~~~~
-   SM4 key length is is 16 octets,
+   the SM4 key length is is 16 octets,
 
-   Max plaintext length is 2^24 - 1 octets,
+   the max plaintext length is 2^24 - 1 octets,
 
-   Max AAD length is 2^64 - 1 octets, and
+   the max AAD length is 2^64 - 1 octets, and
 
-   Max Ciphertext length is 2^24 + 15 octets.
+   the max ciphertext length is 2^24 + 15 octets.
 ~~~~~~~~
 
-To generate the nonce, implementations of this document MUST conform to what
-TLSv1.3 specifies (See {{RFC8446}}, Section 5.3).
+To generate the nonce, implementations of this document MUST conform to
+TLSv1.3 (See {{RFC8446}}, Section 5.3).
 
 A security analysis of CCM is available in [J02].
 
 Hash
 ----
 
-SM3 is defined by ISO as {{ISO-SM3}}. During a TLSv1.3 handshake with SM cipher
+SM3 is defined by ISO in {{ISO-SM3}}. During a TLSv1.3 handshake with SM cipher
 suites, the hash function is REQUIRED to be SM3. Implementations MUST use SM3
 for digest, key derivation, Transcript-Hash and other purposes during a TLSv1.3
 key exchange process.
@@ -523,23 +518,22 @@ IANA Considerations
 
 IANA has assigned the values {0x00, 0xC6} and {0x00, 0xC7} with the names
 TLS_SM4_GCM_SM3, TLS_SM4_CCM_SM3,
-to the "TLS Cipher Suite" registry with this document as reference,
-as shown below.
+to the "TLS Cipher Suite" registry with this document as reference:
 
 |   Value    | Description | DTLS-OK | Recommended | Reference |
 |-----------:+-----------------+-----+-------------+-----------|
 | 0x00,0xC6  | TLS_SM4_GCM_SM3 | No  |      No     | this RFC  |
 | 0x00,0xC7  | TLS_SM4_CCM_SM3 | No  |      No     | this RFC  |
 
-IANA has assigned the value 0x0708 with the name sm2sig_sm3, to the
-"TLS SignatureScheme" registry, as shown below.
+IANA has assigned the value 0x0708 with the name 'sm2sig_sm3', to the
+"TLS SignatureScheme" registry:
 
 |  Value | Description | Recommended | Reference |
 |-------:+-------------+-------------+-----------|
 | 0x0708 | sm2sig_sm3  |     No      | this RFC  |
 
-IANA has assigned the value 41 with the name curveSM2, to the
-"TLS Supported Groups" registry, as shown below.
+IANA has assigned the value 41 with the name 'curveSM2', to the
+"TLS Supported Groups" registry:
 
 | Value | Description | DTLS-OK | Recommended | Reference |
 |------:+-------------+---------+-------------+-----------|
@@ -549,19 +543,16 @@ IANA has assigned the value 41 with the name curveSM2, to the
 Security Considerations
 =======================
 
-At the time of writing this document, there are no known weak keys for SM
-cryptographic algorithms SM2, SM3 and SM4, and no security problem
-has been found on those algorithms.
-
-* The cipher suites described in this document MUST NOT be used with TLSv1.2
-  or earlier.
+At the time of writing, there are no known weak keys for SM
+cryptographic algorithms: SM2, SM3 and SM4, and no security issues
+have been found for these algorithms.
 
 --- back
 
 Test Vectors
 ============
 
-All values are in hexadecimal and are in network order (big endian).
+All values are in hexadecimal and are in network byte order (big endian).
 
 SM4-GCM Test Vectors
 --------------------
