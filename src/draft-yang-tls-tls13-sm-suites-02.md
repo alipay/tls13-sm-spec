@@ -207,7 +207,7 @@ encryption and SM3 as the hash function.
 
 SM2 is a set of elliptic curve based cryptographic algorithms including digital
 signature, public key encryption and key exchange scheme. In this document, only
-the SM2 digital signature algorithm is involved, which has now already been added
+the SM2 digital signature algorithm is involved, which has already been added
 to ISO/IEC 14888-3:2018 {{ISO-SM2}} (as well as in {{GBT.32918.2-2016}}).
 SM4 is a block cipher defined in {{GBT.32907-2016}} and now is being standardized
 by ISO to ISO/IEC 18033-3:2010 {{ISO-SM4}}. SM3 is a hash function which produces
@@ -236,7 +236,7 @@ The cipher suites defined here have the following identifiers:
    CipherSuite TLS_SM4_CCM_SM3 = { 0x00, 0xC7 };
 ~~~~~~~~
 
-To accomplish a TLSv1.3 handshake, more objects have been introduced along with
+To accomplish a TLSv1.3 handshake, additional objects have been introduced along with
 the cipher suites as follows.
 
 The SM2 signature algorithm and SM3 hash function used in the Signature Algorithm
@@ -269,8 +269,8 @@ Authentication
 
 ### SM2 Signature Scheme
 
-All cipher suites defined in this document use the SM2 signature algorithm as the
-authentication method when doing a TLSv1.3 handshake.
+All cipher suites defined in this document MUST use the SM2 signature algorithm
+as the authentication method when doing a TLSv1.3 handshake.
 
 The SM2 signature is defined in {{ISO-SM2}}. SM2 signature algorithm is
 based on elliptic curves. SM2 signature algorithm uses a fixed elliptic curve
@@ -319,7 +319,7 @@ used as the SM2 identifier according to {{GMT.0009-2012}}:
    1234567812345678
 ~~~~~~~~
 
-Expressed as octets, it is:
+Expressed as octets, this is:
 
 ~~~~~~~~
    0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38,
@@ -327,7 +327,7 @@ Expressed as octets, it is:
 ~~~~~~~~
 
 In practice, the SM2 identifier used in a certificate signature depends on the
-CA who signs that certificate. CAs may choose other values than the ones mentioned
+CA who signs that certificate. CAs may choose values other than the ones mentioned
 above. Implementations of this document SHOULD confirm this information by themselves.
 
 Key Exchange  {#kx}
@@ -357,7 +357,7 @@ if the client wants to start a TLSv1.3 key negotiation using SM cipher suites.
 If a TLSv1.3 server receives a ClientHello message containing the new cipher
 suites defined in this document, it MAY choose to use the new cipher suites. If
 so, then the server MUST put one of the new cipher suites defined in this
-document into its ServerHello's 'cipher_suites' array and eventually sends it
+document into its ServerHello's 'cipher_suites' array and eventually send it
 to the client side.
 
 A TLSv1.3 server's choice of what cipher suite to use depends on the configuration
@@ -387,20 +387,20 @@ ones.
 
 ### Certificate
 
-When a server sends the Certificate message which contains the server certificate
+When a server sends the Certificate message containing the server certificate
 to the client side, several new rules are added that will affect the certificate
 selection:
 
 * The public key in the certificate MUST be a valid SM2 public key.
 * The signature algorithm used by the CA to sign current certificate MUST be
-sm2sig_sm3.
+'sm2sig_sm3'.
 * The certificate MUST be capable of signing, e.g., the digitalSignature bit
 of X.509's Key Usage extension is set.
 
 ### CertificateVerify
 
-In the certificateVerify message, the signature algorithm MUST be sm2sig_sm3,
-indicating the hash function MUST be SM3 and the signature algorithm MUST be
+In the certificateVerify message, the signature algorithm MUST be 'sm2sig_sm3',
+indicating that the hash function MUST be SM3 and the signature algorithm MUST be
 SM2.
 
 Key Scheduling
@@ -421,16 +421,17 @@ The new cipher suites introduced in this document add two new AEAD encryption
 algorithms, AEAD_SM4_GCM and AEAD_SM4_CCM, which stand for SM4 cipher in Galois/Counter
 mode and SM4 cipher [GBT.32907-2016] in Counter with CBC-MAC mode, respectively.
 
-This section defines the AEAD_SM4_GCM and AEAD_SM4_CCM AEAD algorithms in the
-style of what {{RFC5116}} used to define AEAD ciphers based on AES cipher.
+This section defines the AEAD_SM4_GCM and AEAD_SM4_CCM AEAD algorithms in a
+style similar to what {{RFC5116}} used to define AEAD ciphers based on AES cipher.
 
 ### AEAD_SM4_GCM
 
 The AEAD_SM4_GCM authenticated encryption algorithm works as specified in [GCM],
 using SM4 as the block cipher, by providing the key, nonce, plaintext, and
 associated data to that mode of operation. An authentication tag conforming to
-what Section 5.2 of TLSv1.3 {{RFC8446}} requires is used, which in details MUST
-be constructed by the TLS record header. The AEAD_SM4_GCM ciphertext is formed by
+the requirements of Section 5.2 of TLSv1.3 {{RFC8446}} MUST be constructed by
+the details in the TLS record header. The additional data input that forms the
+authentication tag MUST be the TLS record header. The AEAD_SM4_GCM ciphertext is formed by
 appending the authentication tag provided as an output to the GCM encryption
 operation to the ciphertext that is output by that operation. AEAD_SM4_GCM has 
 four inputs: an SM4 key, an initialization vector (IV), a plaintext content, and optional 
@@ -483,14 +484,14 @@ identified in that appendix are as follows:
    the value of q is 3.
 ~~~~~~~~
 
-An authentication tag conforming to what Section 5.2 of TLSv1.3 {{RFC8446}}
-requires is used, which in details MUST be constructed by the TLS record header.
+An authentication tag is also used in AEAD_SM4_CCM. The generation of the authentication
+tag MUST conform to TLSv1.3 (See {{RFC8446}}, Section 5.2).
 The AEAD_SM4_CCM ciphertext is formed by appending the authentication tag provided
 as an output to the CCM encryption operation to the ciphertext that is output
 by that operation. The input and output lengths are as follows:
 
 ~~~~~~~~
-   the SM4 key length is is 16 octets,
+   the SM4 key length is 16 octets,
 
    the max plaintext length is 2^24 - 1 octets,
 
