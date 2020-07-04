@@ -1,8 +1,8 @@
 ---
 title: ShangMi (SM) Cipher Suites for Transport Layer Security (TLS) Protocol Version 1.3
 abbrev: TLSv1.3 SM Cipher Suites
-docname: draft-yang-tls-tls13-sm-suites-03
-date: 2020-01-06
+docname: draft-yang-tls-tls13-sm-suites-04
+date: 2020-07-04
 # date: 2019-08
 # date: 2019
 
@@ -24,7 +24,7 @@ author:
       -
         ins: P. Yang
         name: Paul Yang
-        org: Ant Financial
+        org: Ant Technology
         # abbrev: AntFin
         street: No. 77 Xueyuan Road
         city: Hangzhou
@@ -596,23 +596,23 @@ Contributors
 ===============
 
 Wuqiong Pan  
-Ant Financial  
+Ant Technology  
 wuqiong.pwq@antfin.com  
 
 Qin Long  
-Ant Financial  
+Ant Technology  
 zhuolong.lq@antfin.com  
 
 Kepeng Li  
-Ant Financial  
+Ant Technology  
 kepeng.lkp@antfin.com  
 
 Ke Zeng  
-Ant Financial  
+Ant Technology  
 william.zk@antfin.com  
 
 Han Xiao  
-Ant Financial  
+Ant Technology  
 han.xiao@antfin.com  
 
 Zhi Guan  
