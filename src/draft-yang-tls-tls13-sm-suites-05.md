@@ -1,8 +1,8 @@
 ---
 title: ShangMi (SM) Cipher Suites for Transport Layer Security (TLS) Protocol Version 1.3
 abbrev: TLSv1.3 SM Cipher Suites
-docname: draft-yang-tls-tls13-sm-suites-04
-date: 2020-07-04
+docname: draft-yang-tls-tls13-sm-suites-05
+date: 2020-08-13
 # date: 2019-08
 # date: 2019
 
@@ -24,7 +24,7 @@ author:
       -
         ins: P. Yang
         name: Paul Yang
-        org: Ant Technology
+        org: Ant Group
         # abbrev: AntFin
         street: No. 77 Xueyuan Road
         city: Hangzhou
@@ -218,12 +218,16 @@ ISO/IEC 10118-3:2018 {{ISO-SM3}}, and also been described by {{GBT.32905-2016}}.
 Terminology     {#term}
 -----------
 
+Although this document is not an IETF Standards Track publication it
+adopts the conventions for normatve language to provide clarity of
+instructions to the implementer, and to indicate requirement levels
+for compliant TLSv1.3 implementations.
+
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-"OPTIONAL" in this document are to be interpreted as described in BCP
-14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in all
-capitals, as shown here, and indicate requirement levels for
-compliant TLSv1.3 implementations.
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+document are to be interpreted as described in BCP 14 {{RFC2119}}
+{{RFC8174}} when, and only when, they appear in all capitals, as shown
+here.
 
 
 Supported Cipher Suites     {#proposed}
@@ -237,20 +241,20 @@ The cipher suites defined here have the following identifiers:
 ~~~~~~~~
 
 To accomplish a TLSv1.3 handshake, additional objects have been introduced along with
-the cipher suites as follows.
+the cipher suites as follows:
 
-The SM2 signature algorithm and SM3 hash function used in the Signature Algorithm
+* The SM2 signature algorithm and SM3 hash function used in the Signature Algorithm
 extension defined in appendix-B.3.1.3 of {{RFC8446}}:
 
 ~~~~~~~~
-   SignatureScheme sm2sig_sm3 = { 0x0708 };
+      SignatureScheme sm2sig_sm3 = { 0x0708 };
 ~~~~~~~~
 
-The SM2 elliptic curve ID used in the Supported Groups extension defined in
+* The SM2 elliptic curve ID used in the Supported Groups extension defined in
 appendix-B.3.1.4 of {{RFC8446}}:
 
 ~~~~~~~~
-   NamedGroup curveSM2 = { 41 };
+      NamedGroup curveSM2 = { 41 };
 ~~~~~~~~
 
 
@@ -260,7 +264,7 @@ Cipher Suites Definitions  {#definitions}
 TLS Versions
 ------------
 
-The new cpher suites defined in this document are only applicable to TLSv1.3.
+The new cipher suites defined in this document are only applicable to TLSv1.3.
 Implementations of this document MUST NOT apply these cipher suites to any older
 versions of TLS.
 
@@ -272,15 +276,15 @@ Authentication
 All cipher suites defined in this document MUST use the SM2 signature algorithm
 as the authentication method when doing a TLSv1.3 handshake.
 
-The SM2 signature is defined in {{ISO-SM2}}. SM2 signature algorithm is
-based on elliptic curves. SM2 signature algorithm uses a fixed elliptic curve
+The SM2 signature is defined in {{ISO-SM2}}. The SM2 signature algorithm is
+based on elliptic curves. The SM2 signature algorithm uses a fixed elliptic curve
 parameter set defined in {{GBT.32918.5-2016}}. This curve has the name curveSM2
 and has been assigned the value 41 as shown in Section 4. Unlike other elliptic curve
 based public key algorithms like ECDSA, SM2 MUST NOT select other elliptic curves.
 But it is acceptable to write test cases that use other elliptic curve parameter
 sets for SM2, take Annex F.14 of {{ISO-SM2}} as a reference.
 
-Implementations of the cipher suites defined in this document SHOULD conform to
+Implementations of the cipher suites defined in this document MUST conform to
 what {{GBT.32918.5-2016}} requires, that is to say, the only valid elliptic curve
 parameter for SM2 signature algorithm (a.k.a curveSM2) is defined as follows:
 
@@ -304,15 +308,17 @@ parameter for SM2 signature algorithm (a.k.a curveSM2) is defined as follows:
 ~~~~~~~~
 
 The SM2 signature algorithm requests an identifier value when generating or verifying
-a signature. Implementations of this document MUST use the following ASCII string
-value as the SM2 identifier when doing a TLSv1.3 key exchange:
+a signature. In all uses except when a client of server needs to verify a peer's
+SM2 certificate in the Certificate message, an implementation of this document
+MUST use the following ASCII string value as the SM2 identifier when doing a
+TLSv1.3 key exchange:
 
 ~~~~~~~~
    TLSv1.3+GM+Cipher+Suite
 ~~~~~~~~
 
-Except if either a client or a server needs to verify the peer's SM2 certificate
-contained in the Certificate message, then the following ASCII string value SHOULD be
+If either a client or a server needs to verify the peer's SM2 certificate
+contained in the Certificate message, then the following ASCII string value MUST be
 used as the SM2 identifier according to {{GMT.0009-2012}}:
 
 ~~~~~~~~
@@ -381,8 +387,8 @@ to send its certificate for authentication purposes, the following requirements
 MUST be fulfilled:
 
 * The only valid signature algorithm present in 'signature_algorithms' extension
-MUST be 'sm2sig_sm3'. That is to say, if server chooses to use an SM cipher suite,
-the signature algorithm for client's certificate SHOULD only be SM2 and SM3 capable
+MUST be 'sm2sig_sm3'. That is to say, if the server chooses to use an SM cipher suite,
+the signature algorithm for client's certificate MUST be SM2 and SM3 capable
 ones.
 
 ### Certificate
@@ -408,11 +414,11 @@ Key Scheduling
 
 As described in {{sm-algos}}, SM2 is actually a set of cryptographic
 algorithms including one key exchange protocol which defines methods such as
-key derivation function, etc. In this document, SM2 key exchange protocol is
-not introduced and SHALL NOT be used in the key exchange steps defined in
-{{kx}}. Implementations of this document MUST always conform to what TLSv1.3
-{{RFC8446}} and its successors require about the key derivation and related
-methods.
+key derivation function, etc. This document does not define an SM2 key exchange
+protocol, and an SM2 key exchange protocol SHALL NOT be used in the key exchange
+steps defined in {{kx}}. Implementations of this document MUST always conform to
+what TLSv1.3 {{RFC8446}} and its successors require about the key derivation and
+related methods.
 
 Cipher
 ------
@@ -429,7 +435,7 @@ style similar to what {{RFC5116}} used to define AEAD ciphers based on AES ciphe
 The AEAD_SM4_GCM authenticated encryption algorithm works as specified in [GCM],
 using SM4 as the block cipher, by providing the key, nonce, plaintext, and
 associated data to that mode of operation. An authentication tag conforming to
-the requirements of Section 5.2 of TLSv1.3 {{RFC8446}} MUST be constructed by
+the requirements of Section 5.2 of TLSv1.3 {{RFC8446}} MUST be constructed using
 the details in the TLS record header. The additional data input that forms the
 authentication tag MUST be the TLS record header. The AEAD_SM4_GCM ciphertext is formed by
 appending the authentication tag provided as an output to the GCM encryption
@@ -441,12 +447,12 @@ set of terms for AEAD_SM4_GCM and AEAD_SM4_CCM, the AEAD_SM4_GCM IV is referred 
 nonce in the remainder of this document. A simple test vector of AEAD_SM4_GCM and 
 AEAD_SM4_CCM is given in Appendix A of this document.
 
-The nonce is generated by the party performing the authenticated encryption operation.  
+The nonce is generated by the party performing the authenticated encryption operation.
 Within the scope of any authenticated-encryption key, the nonce value MUST be unique.
 That is, the set of nonce values used with any given key MUST NOT contain any duplicates.
 Using the same nonce for two different messages encrypted with the same key
 destroys the security properties of GCM mode. To generate the nonce, implementations of this document
-MUST conform to TLSv1.3 (See {{RFC8446}}, Section 5.3).
+MUST conform to TLSv1.3 (see {{RFC8446}}, Section 5.3).
 
 The input and output lengths are as follows:
 
@@ -501,7 +507,7 @@ by that operation. The input and output lengths are as follows:
 ~~~~~~~~
 
 To generate the nonce, implementations of this document MUST conform to
-TLSv1.3 (See {{RFC8446}}, Section 5.3).
+TLSv1.3 (see {{RFC8446}}, Section 5.3).
 
 A security analysis of CCM is available in [J02].
 
@@ -547,6 +553,10 @@ Security Considerations
 At the time of writing, there are no known weak keys for SM
 cryptographic algorithms: SM2, SM3 and SM4, and no security issues
 have been found for these algorithms.
+
+A security analysis of GCM is available in [MV04].
+
+A security analysis of CCM is available in [J02].
 
 --- back
 
@@ -595,24 +605,20 @@ Authentication Tag:      16842D4FA186F56AB33256971FA110F4
 Contributors
 ===============
 
-Wuqiong Pan  
-Ant Technology  
-wuqiong.pwq@antfin.com  
-
 Qin Long  
-Ant Technology  
+Ant Group  
 zhuolong.lq@antfin.com  
 
 Kepeng Li  
-Ant Technology  
+Ant Group  
 kepeng.lkp@antfin.com  
 
 Ke Zeng  
-Ant Technology  
+Ant Group  
 william.zk@antfin.com  
 
 Han Xiao  
-Ant Technology  
+Ant Group  
 han.xiao@antfin.com  
 
 Zhi Guan  
