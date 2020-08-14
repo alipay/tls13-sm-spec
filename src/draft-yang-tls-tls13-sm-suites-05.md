@@ -219,7 +219,7 @@ Terminology     {#term}
 -----------
 
 Although this document is not an IETF Standards Track publication it
-adopts the conventions for normatve language to provide clarity of
+adopts the conventions for normative language to provide clarity of
 instructions to the implementer, and to indicate requirement levels
 for compliant TLSv1.3 implementations.
 
