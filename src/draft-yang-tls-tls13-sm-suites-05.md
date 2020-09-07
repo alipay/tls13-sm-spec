@@ -68,7 +68,7 @@ normative:
       org: International Organization for Standardization
     date: 2010-12
     seriesinfo:
-      ISO: ISO/IEC 18038-3:2010
+      ISO: ISO/IEC 18033-3:2010
   GCM:
     title: >
       NIST Special Publication 800-38D:
