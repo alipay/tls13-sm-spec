@@ -397,7 +397,7 @@ to send its certificate for authentication purposes, for conformance to this
 profile, it is REQUIRED that:
 
 * The only valid signature algorithm present in 'signature_algorithms' extension
-MUST be 'sm2sig_sm3'. That is to say, if the server chooses to conform to this profile
+MUST be 'sm2sig_sm3'. That is to say, if the server chooses to conform to this profile,
 the signature algorithm for client's certificate MUST use the SM2/SM3 procedure specified by this document.
 
 ### Certificate
