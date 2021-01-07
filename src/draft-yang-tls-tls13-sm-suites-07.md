@@ -272,9 +272,10 @@ Algorithm Definitions  {#definitions}
 TLS Versions
 ------------
 
-The new cipher suites defined in this document are only applicable to TLSv1.3.
-Implementations of this document MUST NOT apply these cipher suites to any older
-versions of TLS.
+The new cipher suites along with any related signature algorithm or key exchange
+scheme defined in this document are only applicable to TLSv1.3.
+Implementations of this document MUST NOT apply these cipher suites, signature
+algorithms or key exchange scheme to any older versions of TLS.
 
 Authentication
 --------------
@@ -288,10 +289,10 @@ as the authentication method for a TLSv1.3 handshake.
 The SM2 signature is defined in {{ISO-SM2}}. The SM2 signature algorithm is
 based on elliptic curves. The SM2 signature algorithm uses a fixed elliptic curve
 parameter set defined in {{GBT.32918.5-2016}}. This curve has the name curveSM2
-and has been assigned the value 41 as shown in {{proposed}}. Unlike other elliptic curve
-based public key algorithms like ECDSA, SM2 MUST NOT select other elliptic curves.
-But it is acceptable to write test cases that use other elliptic curve parameter
-sets for SM2, take Annex F.14 of {{ISO-SM2}} as a reference.
+and has been assigned the value 41 as shown in {{proposed}}. That is to say, SM2
+MUST select the specific elliptic curve. But it is acceptable to write test cases
+that use other elliptic curve parameter sets for SM2, take Annex F.14 of {{ISO-SM2}}
+as a reference.
 
 Implementations of the signature scheme and key exchange mechanism defined in this document MUST conform to
 what {{GBT.32918.5-2016}} requires, that is to say, the only valid elliptic curve
@@ -395,9 +396,11 @@ If a CertificateRequest message is sent by the server to request the client
 to send its certificate for authentication purposes, for conformance to this
 profile, it is REQUIRED that:
 
-* The only valid signature algorithm present in 'signature_algorithms' extension
-MUST be 'sm2sig_sm3'. That is to say, if the server chooses to conform to this profile,
-the signature algorithm for client's certificate MUST use the SM2/SM3 procedure specified by this document.
+* The only valid signature algorithm present in "signature_algorithms" extension
+MUST be "sm2sig_sm3" and "signature_algorithms_cert" MUST NOT be present.
+That is to say, if the server chooses to conform to this profile,
+the signature algorithm for client's certificate MUST use the SM2/SM3 procedure
+specified by this document.
 
 ### Certificate
 
