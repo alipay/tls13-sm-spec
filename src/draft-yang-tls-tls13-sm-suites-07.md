@@ -233,11 +233,10 @@ instructions to the implementer, and to indicate requirement levels
 for compliant TLSv1.3 implementations.
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-document are to be interpreted as described in BCP 14 {{RFC2119}}
-{{RFC8174}} when, and only when, they appear in all capitals, as shown
-here.
-
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+"OPTIONAL" in this document are to be interpreted as described in BCP 14
+{{RFC2119}} {{RFC8174}} when, and only when, they appear in all capitals,
+as shown here.
 
 Algorithm Identifiers {#proposed}
 =====================
@@ -253,14 +252,14 @@ To accomplish a TLSv1.3 handshake, additional objects have been introduced along
 the cipher suites as follows:
 
 * The combination of SM2 signature algorithm and SM3 hash function used in the Signature Algorithm
-extension defined in appendix-B.3.1.3 of {{RFC8446}}:
+extension defined in Section 4.2.3 of {{RFC8446}}:
 
 ~~~~~~~~
       SignatureScheme sm2sig_sm3 = { 0x0708 };
 ~~~~~~~~
 
 * The SM2 elliptic curve ID used in the Supported Groups extension defined in
-appendix-B.3.1.4 of {{RFC8446}}:
+Section 4.2.7 of {{RFC8446}}:
 
 ~~~~~~~~
       NamedGroup curveSM2 = { 41 };
@@ -273,9 +272,10 @@ Algorithm Definitions  {#definitions}
 TLS Versions
 ------------
 
-The new cipher suites defined in this document are only applicable to TLSv1.3.
-Implementations of this document MUST NOT apply these cipher suites to any older
-versions of TLS.
+The new cipher suites along with any related signature algorithm or key exchange
+scheme defined in this document are only applicable to TLSv1.3.
+Implementations of this document MUST NOT apply these cipher suites, signature
+algorithms or key exchange scheme to any older versions of TLS.
 
 Authentication
 --------------
@@ -289,10 +289,10 @@ as the authentication method for a TLSv1.3 handshake.
 The SM2 signature is defined in {{ISO-SM2}}. The SM2 signature algorithm is
 based on elliptic curves. The SM2 signature algorithm uses a fixed elliptic curve
 parameter set defined in {{GBT.32918.5-2016}}. This curve has the name curveSM2
-and has been assigned the value 41 as shown in {{proposed}}. Unlike other elliptic curve
-based public key algorithms like ECDSA, SM2 MUST NOT select other elliptic curves.
-But it is acceptable to write test cases that use other elliptic curve parameter
-sets for SM2, take Annex F.14 of {{ISO-SM2}} as a reference.
+and has been assigned the value 41 as shown in {{proposed}}. That is to say, SM2
+MUST select the specific elliptic curve. But it is acceptable to write test cases
+that use other elliptic curve parameter sets for SM2, take Annex F.14 of {{ISO-SM2}}
+as a reference.
 
 Implementations of the signature scheme and key exchange mechanism defined in this document MUST conform to
 what {{GBT.32918.5-2016}} requires, that is to say, the only valid elliptic curve
@@ -318,7 +318,7 @@ parameter set for SM2 signature algorithm (a.k.a curveSM2) is defined as follows
 ~~~~~~~~
 
 The SM2 signature algorithm requests an identifier value when generating or verifying
-a signature. In all uses except when a client of server needs to verify a peer's
+a signature. In all uses except when a client or server needs to verify a peer's
 SM2 certificate in the Certificate message, an implementation of this document
 MUST use the following ASCII string value as the SM2 identifier when doing a
 TLSv1.3 key exchange:
@@ -382,7 +382,7 @@ new cipher suites defined in this document, or it may not be. Typical TLSv1.3
 server applications also provide a mechanism that configures the cipher suite
 preference at server side. If a server is not configured to use the cipher suites
 defined in this document, it SHOULD choose another cipher suite in the list that
-the TLSv1.3 client provides; otherwise the server MUST abort the handshake with
+the TLSv1.3 client provides; otherwise the server aborts the handshake with
 an "illegal_parameter" alert.
 
 The following extensions MUST conform to the new requirements:
@@ -392,13 +392,15 @@ if the server wants to conform to this profile.
 
 ### CertificateRequest
 
-If a CertificateRequest message is sent by the server to require the client
+If a CertificateRequest message is sent by the server to request the client
 to send its certificate for authentication purposes, for conformance to this
 profile, it is REQUIRED that:
 
-* The only valid signature algorithm present in 'signature_algorithms' extension
-MUST be 'sm2sig_sm3'. That is to say, if the server chooses to conform to this profile,
-the signature algorithm for client's certificate MUST use the SM2/SM3 procedure specified by this document.
+* The only valid signature algorithm present in "signature_algorithms" extension
+MUST be "sm2sig_sm3" and "signature_algorithms_cert" MUST NOT be present.
+That is to say, if the server chooses to conform to this profile,
+the signature algorithm for client's certificate MUST use the SM2/SM3 procedure
+specified by this document.
 
 ### Certificate
 
@@ -415,8 +417,7 @@ of X.509's Key Usage extension is set.
 ### CertificateVerify
 
 In the CertificateVerify message, the signature algorithm MUST be 'sm2sig_sm3',
-indicating that the hash function MUST be SM3 and the signature algorithm MUST be
-SM2.
+indicating that the hash function is SM3 and the signature algorithm is SM2.
 
 Key Scheduling
 -------------
@@ -424,8 +425,8 @@ Key Scheduling
 As described in {{sm-algos}}, SM2 is actually a set of cryptographic
 algorithms including one key exchange protocol which defines methods such as
 key derivation function, etc. This document does not define an SM2 key exchange
-protocol, and an SM2 key exchange protocol SHALL NOT be used in the key exchange
-steps defined in {{kx}}. Implementations of this document MUST always conform to
+protocol, and an SM2 key exchange protocol SHALL NOT be used in the basic key exchange
+scheme defined in {{kx}}. Implementations of this document MUST always conform to
 what TLSv1.3 {{RFC8446}} and its successors require about the key derivation and
 related methods.
 
